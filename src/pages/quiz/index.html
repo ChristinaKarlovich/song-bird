@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz</title>
+</head>
+<body class="page" id="page">
+  <main class="game-section">
+    <div class="container">
+      <div class="game-wrapper">
+        <section class="game-header-section">
+          <div class="game-header-grid">
+            <div class="current-score"> Счет: 0</div>
+          </div>
+          <ul class="question-list">
+            <li class="question-item active">Разминка</li>
+            <li class="question-item">Воробьиные</li>
+            <li class="question-item">Лесные птицы</li>
+            <li class="question-item">Певчие птицы</li>
+            <li class="question-item">Хищные птицы</li>
+            <li class="question-item">Морские птицы</li>
+          </ul>
+        </section>
+        <section class="question-section">
+          <img src="#" alt="" class="question-bird">
+          <div class="question-song">
+            <div class="question-bird-name"></div>
+            <audio class="question-audio" controls src="#">
+          </div>
+        </section>
+        <section class="variant-section">
+          <ul class="variant-list"></ul>
+          <section class="variant-info-section">
+            <p class="instruction active">Послушайте плеер.
+              Выберите птицу из списка</p>
+            <div class="variant-info">
+              <img src="#" alt="" class="variant-bird">
+              <div class="variant-song">
+                <div class="variant-bird-name"></div>
+                <div class="variant-bird-name-en"></div>
+                <audio class="variant-audio" controls src="#">
+                </audio>
+              </div>
+              <p class="variant-description"></p>
+            </div>
+          </div>
+        </section>
+        <button class="next-question">Следующий вопрос</button>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <div class="container">
+      <div class="footer-wrapper">
+        <section class="author-info">
+          <a class="author" href="https://github.com/ChristinaKarlovich"> Chris Karlovich</a>
+          <div class="year">@2022</div>
+        </section>
+        <section class="school-info">
+          <div class="school-logo"></div>
+          <a class="class-info" href="https://rs.school/js/">Курс «JavaScript/Front-end»</a>
+        </section>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

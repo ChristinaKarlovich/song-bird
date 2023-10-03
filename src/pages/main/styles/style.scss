@@ -1,0 +1,129 @@
+.page {
+  font-size: 16px;
+  color: #335252;
+  background-color: #2D3033;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto 0;
+
+  @media (min-width: 320px) and (max-width: 640px) {
+    width: 100%;
+    flex-direction: column;
+  }
+}
+
+.header,
+.video,
+.main-info {
+  margin: 10px auto;
+}
+.header-grid,
+.main-info-wrapper,
+.footer-wrapper {  
+  background-color: rgba($color: #E2E8E4, $alpha: 1);
+  border-radius: 5px;
+}
+
+.header-grid {  
+  display: flex;
+
+  @media (min-width: 661px) {
+    flex-direction: row;
+    height: 70px;
+  }
+  @media (min-width: 320px) and (max-width: 660px) {
+    flex-direction: column;
+  }
+
+  a {
+    display: flex;
+    margin-top: auto;
+    margin-bottom: auto;
+    text-decoration: none;
+    height: 90%;
+    color: #335252;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 20px;
+    align-items: center;
+  
+
+    
+  @media (min-width: 661px) {
+    width: 250px;
+    
+    &:not(:first-child) {
+      margin: 0px 10px;
+      width: fit-content;
+    }
+  }
+   @media (min-width: 320px) and (max-width: 660px) {
+    
+    width: fit-content;
+    margin: 0 auto 0;
+    
+    &:not(:first-child) {
+      height: 50px;
+    }
+  }
+
+    img {
+      display: block;
+      margin-top: auto;
+      margin-bottom: auto;
+      width: 250px;
+      @media (min-width: 320px) and (max-width: 640px) {
+        width: 100%;
+      }
+    }
+  }
+
+  
+}
+
+.main-info-wrapper {
+  padding: 10px;
+  align-items: center;
+}
+
+.video-wrapper iframe {
+  aspect-ratio: 4/3;
+  width: 100%;
+}
+
+.footer-wrapper {
+  display: flex;
+  justify-content: space-between;
+  
+  @media (min-width: 641px) {
+    flex-direction: row;
+  }
+  @media (min-width: 320px) and (max-width: 640px) {
+    flex-direction: column;
+  }
+
+  .author-info,
+  .school-info {
+    margin: 10px;
+  }
+}
+
+.author {
+  text-decoration: none;
+  color: #335252;
+  img {
+    width: 20px;
+  }
+}
+.school-logo {
+  img {
+    width: 60px;
+  }
+}
+
+.class-info {  
+  text-decoration: none;
+  color: #335252;
+}
