@@ -1,12 +1,17 @@
 import './style.scss';
 import birdsdata from '../../assets/birdsdata';
+import closeBtn from '../../assets/icon/close.svg';
 
 let divWrapper = null;
+let imgCloseBtn = null;
 
 setCatalog();
 
 function closeCatalogItemInfo(event) {
-  if (event.target != null && event.target === divWrapper) {
+  if (
+    (event.target != null && event.target === divWrapper) ||
+    event.target === imgCloseBtn
+  ) {
     document.body.removeChild(divWrapper);
   }
 }
@@ -23,6 +28,18 @@ function showCatalogItemInfo(element) {
   let divInfo = document.createElement('div');
   divInfo.classList.add('element-info');
   divWrapper.append(divInfo);
+
+  let divCloseBtn = document.createElement('div');
+  divCloseBtn.classList.add('close-btn-wrapper');
+  divInfo.append(divCloseBtn);
+
+  imgCloseBtn = document.createElement('img');
+  imgCloseBtn.classList.add('close-btn-image');
+  divWrapper.addEventListener('click', (event) => {
+    closeCatalogItemInfo(event);
+  });
+  imgCloseBtn.src = closeBtn;
+  divCloseBtn.append(imgCloseBtn);
 
   let imgBird = document.createElement('img');
   imgBird.classList.add('element-image');

@@ -59,8 +59,20 @@
     align-self: center;
   }
 
-  :first-child {
+  :nth-child(2) {
     margin-top: 0px;
+  }
+
+  .close-btn-wrapper {
+    width: 100%;
+    margin: 0px;
+    position: absolute;
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  .close-btn-image {
+    margin: 10px;
   }
 
   .element-name,
