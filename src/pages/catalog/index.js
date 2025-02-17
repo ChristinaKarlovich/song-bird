@@ -1,6 +1,7 @@
 import './style.scss';
 import birdsdata from '../../assets/birdsdata';
 import closeBtn from '../../assets/icon/close.svg';
+import { drawPlayer, playpauseAudio } from '../../player/player';
 
 let divWrapper = null;
 let imgCloseBtn = null;
@@ -66,6 +67,8 @@ function showCatalogItemInfo(element) {
   audioSong.src = element.audio;
   audioSong.controls = true;
   divInfo.append(audioSong);
+
+  drawPlayer(divInfo, element.audio);
 }
 
 function setCatalog() {
