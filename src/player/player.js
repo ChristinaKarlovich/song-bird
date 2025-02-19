@@ -6,6 +6,7 @@ let playBtn = null;
 let playBtnIcon = null;
 let audioSong = null;
 let divCurrentTime = null;
+let divDurationCurrent = null;
 
 export function drawPlayer(container, audio) {
   let playerWrapper = document.createElement('div');
@@ -18,6 +19,7 @@ export function drawPlayer(container, audio) {
   audioSong.addEventListener('timeupdate', (event) => {
     console.log(getTimePartsBySeconds(audioSong.currentTime));
     let songTime = getTimePartsBySeconds(audioSong.currentTime);
+    setCurrentDuration(audioSong.currentTime);
     divCurrentTime.innerText = `${songTime.minutes.toLocaleString('en-US', {
       minimumIntegerDigits: 2,
       useGrouping: false,
@@ -56,6 +58,15 @@ export function drawPlayer(container, audio) {
     minimumIntegerDigits: 2,
     useGrouping: false,
   })}`;
+
+  let divDurationContainer = document.createElement('div');
+  divDurationContainer.classList.add('duration-container');
+  playerWrapper.append(divDurationContainer);
+
+  divDurationCurrent = document.createElement('div');
+  divDurationCurrent.classList.add('duration-current');
+  divDurationContainer.append(divDurationCurrent);
+
   playerWrapper.append(divCurrentTime);
 
   setBtnIcon();
@@ -68,6 +79,12 @@ function getTimePartsBySeconds(number) {
   let seconds = Math.floor((intSeconds % 3600) % 60);
 
   return { hours, minutes, seconds };
+}
+
+function setCurrentDuration(number) {
+  let duration = Math.round((number * 100) / audioSong.duration);
+  divDurationCurrent.style.width = `${duration}%`;
+  console.log(duration);
 }
 
 function setBtnIcon() {
