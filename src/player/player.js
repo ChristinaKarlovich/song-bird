@@ -26,6 +26,10 @@ export function drawPlayer(container, audio) {
       useGrouping: false,
     })}`;
   });
+  audioSong.addEventListener('ended', () => {
+    playBtn.classList.toggle('play-mode');
+    setBtnIcon();
+  });
 
   container.append(audioSong);
 
