@@ -6,7 +6,7 @@ let playBtn = null;
 let playBtnIcon = null;
 let audioSong = null;
 let divCurrentTime = null;
-let divDurationCurrent = null;
+let rangeDuration = null;
 
 export function drawPlayer(container, audio) {
   let playerWrapper = document.createElement('div');
@@ -59,13 +59,17 @@ export function drawPlayer(container, audio) {
     useGrouping: false,
   })}`;
 
+  rangeDuration = document.createElement('input');
+  rangeDuration.classList.add('audio-range-duration');
+  rangeDuration.type = 'range';
+  rangeDuration.min = 0;
+  rangeDuration.max = 100;
+  rangeDuration.value = 0;
+  playerWrapper.append(rangeDuration);
+
   let divDurationContainer = document.createElement('div');
   divDurationContainer.classList.add('duration-container');
   playerWrapper.append(divDurationContainer);
-
-  divDurationCurrent = document.createElement('div');
-  divDurationCurrent.classList.add('duration-current');
-  divDurationContainer.append(divDurationCurrent);
 
   playerWrapper.append(divCurrentTime);
 
@@ -83,7 +87,13 @@ function getTimePartsBySeconds(number) {
 
 function setCurrentDuration(number) {
   let duration = Math.round((number * 100) / audioSong.duration);
-  divDurationCurrent.style.width = `${duration}%`;
+  rangeDuration.value = duration;
+  rangeDuration.style.background =
+    'linear-gradient(to right,#ffffff ' +
+    duration +
+    '%,#ffffff80 ' +
+    duration +
+    '%)';
   console.log(duration);
 }
 
