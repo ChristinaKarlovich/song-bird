@@ -7,6 +7,8 @@ let playBtnIcon = null;
 let audioSong = null;
 let divCurrentTime = null;
 let rangeDuration = null;
+let songDurationFormat = 0;
+let rangeVolume = null;
 
 export function drawPlayer(container, audio) {
   let playerWrapper = document.createElement('div');
@@ -16,24 +18,39 @@ export function drawPlayer(container, audio) {
   audioSong = document.createElement('audio');
   audioSong.src = audio;
 
-  audioSong.addEventListener('timeupdate', (event) => {
-    console.log(getTimePartsBySeconds(audioSong.currentTime));
-    let songTime = getTimePartsBySeconds(audioSong.currentTime);
-    setCurrentDuration(audioSong.currentTime);
-    divCurrentTime.innerText = `${songTime.minutes.toLocaleString('en-US', {
-      minimumIntegerDigits: 2,
-      useGrouping: false,
-    })}:${songTime.seconds.toLocaleString('en-US', {
-      minimumIntegerDigits: 2,
-      useGrouping: false,
-    })}`;
-  });
+  audioSong.addEventListener('timeupdate', fillCurrentTime);
   audioSong.addEventListener('ended', () => {
     playBtn.classList.toggle('play-mode');
     setBtnIcon();
   });
+  audioSong.addEventListener('canplaythrough', () => {
+    let songDuration = getTimePartsBySeconds(audioSong.duration);
+    songDurationFormat = formateTime(songDuration);
+    fillCurrentTime();
+  });
+
+  function fillCurrentTime() {
+    let songTime = getTimePartsBySeconds(audioSong.currentTime);
+    setCurrentDuration(audioSong.currentTime);
+    divCurrentTime.innerText = `${formateTime(songTime)}/${songDurationFormat}`;
+  }
 
   container.append(audioSong);
+
+  divCurrentTime = document.createElement('div');
+  playerWrapper.append(divCurrentTime);
+
+  rangeVolume = document.createElement('input');
+  rangeVolume.classList.add('audio-range-volume');
+  rangeVolume.type = 'range';
+  rangeVolume.min = 0;
+  rangeVolume.max = 10;
+  rangeVolume.value = 5;
+  rangeVolume.addEventListener('change', (event) => {
+    console.log(+event.target.value);
+    audioSong.volume = +event.target.value / 10;
+  });
+  playerWrapper.append(rangeVolume);
 
   playBtn = document.createElement('div');
   playBtn.classList.add('play-btn');
@@ -49,31 +66,34 @@ export function drawPlayer(container, audio) {
   playBtnIcon.classList.add('play-pause-icon');
   playBtn.append(playBtnIcon);
 
-  divCurrentTime = document.createElement('div');
-  let songTime = getTimePartsBySeconds(audioSong.currentTime);
-  divCurrentTime.innerText = `${songTime.minutes.toLocaleString('en-US', {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  })}:${songTime.seconds.toLocaleString('en-US', {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  })}`;
-
   rangeDuration = document.createElement('input');
   rangeDuration.classList.add('audio-range-duration');
   rangeDuration.type = 'range';
   rangeDuration.min = 0;
   rangeDuration.max = 100;
   rangeDuration.value = 0;
+  rangeDuration.addEventListener('change', (event) => {
+    let newTime = (+event.target.value * audioSong.duration) / 100;
+    audioSong.currentTime = newTime;
+  });
+
   playerWrapper.append(rangeDuration);
 
   let divDurationContainer = document.createElement('div');
   divDurationContainer.classList.add('duration-container');
   playerWrapper.append(divDurationContainer);
 
-  playerWrapper.append(divCurrentTime);
-
   setBtnIcon();
+}
+
+function formateTime(time) {
+  return `${time.minutes.toLocaleString('en-US', {
+    minimumIntegerDigits: 2,
+    useGrouping: false,
+  })}:${time.seconds.toLocaleString('en-US', {
+    minimumIntegerDigits: 2,
+    useGrouping: false,
+  })}`;
 }
 
 function getTimePartsBySeconds(number) {
@@ -86,7 +106,9 @@ function getTimePartsBySeconds(number) {
 }
 
 function setCurrentDuration(number) {
-  let duration = Math.round((number * 100) / audioSong.duration);
+  let duration = Number.isNaN(audioSong.duration)
+    ? 0
+    : Math.round((number * 100) / audioSong.duration);
   rangeDuration.value = duration;
   rangeDuration.style.background =
     'linear-gradient(to right,#ffffff ' +
