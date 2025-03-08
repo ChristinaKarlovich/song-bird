@@ -1,31 +1,42 @@
-.play-btn {
-  width: 30px;
-
-  img {
-    width: 100%;
-  }
-}
-
 .player-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 70%;
+  height: 50px;
   background-color: #ffffff80;
-  border-radius: 10px;
+  border-radius: 20px;
+  padding: 10px 10px 15px;
 
+  .audio-controles-wrapper {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+    img {
+      width: 20px;
+    }
+    
+    .play-btn,
+    .volume-wrapper {
+      display: flex;
+      align-items: center;}
+  }
+  .audio-range-volume,
   .audio-range-duration{
     -webkit-appearance: none;  /* Override default CSS styles */
   appearance: none;
-  width: 100%; /* Full-width */
   height: 5px;
   background-color: #ffffff80;
   cursor: pointer; /* Cursor on hover */
   }
   
-
+  .audio-range-volume::-webkit-slider-thumb,
   .audio-range-duration::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
     appearance: none;
-    width: 5px; /* Set a specific slider handle width */
-    height: 5px; /* Slider handle height */
+    width: 10px; /* Set a specific slider handle width */
+    height: 10px; /* Slider handle height */
     border-radius: 50%;
     background: #ffffff;
     cursor: pointer; /* Cursor on hover */
