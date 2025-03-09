@@ -1,9 +1,10 @@
-import "./style.scss";
-import birdsdata from "../../assets/birdsdata";
-import birdQuestImg from "./../../assets/img/bird.quest.jpg";
-import logoHeader from "./../../assets/img/logo-transparent.png";
-import winSound from "./../../assets/sound/win.wav";
-import failSound from "./../../assets/sound/fail.wav";
+import './style.scss';
+import birdsdata from '../../assets/birdsdata';
+import birdQuestImg from './../../assets/img/bird.quest.jpg';
+import logoHeader from './../../assets/img/logo-transparent.png';
+import winSound from './../../assets/sound/win.wav';
+import failSound from './../../assets/sound/fail.wav';
+import { drawPlayer } from '../../player/player';
 
 let currentNumber = 0;
 let currentQuestion;
@@ -15,24 +16,24 @@ let success = false;
 
 startGame();
 
-const quizDiv = document.querySelector(".game-header-grid");
+const quizDiv = document.querySelector('.game-header-grid');
 if (quizDiv) {
-  const logoA = document.createElement("a");
-  logoA.href = "index.html";
+  const logoA = document.createElement('a');
+  logoA.href = 'index.html';
   quizDiv.prepend(logoA);
-  const logoImg = document.createElement("img");
+  const logoImg = document.createElement('img');
   logoImg.src = logoHeader;
-  logoImg.classList.add("header-img");
+  logoImg.classList.add('header-img');
   logoA.append(logoImg);
 }
 
 function startGame() {
   nextRound(currentNumber);
-  updateBirdInfo(birdQuestImg, "******");
+  updateBirdInfo(birdQuestImg, '******');
 
-  const nextButton = document.querySelector(".next-question");
+  const nextButton = document.querySelector('.next-question');
   if (nextButton) {
-    nextButton.addEventListener("click", (e) => {
+    nextButton.addEventListener('click', (e) => {
       if (success) {
         showNextQuestion(e);
       }
@@ -41,11 +42,11 @@ function startGame() {
 }
 
 function updateNextButton() {
-  const nextButton = document.querySelector(".next-question");
-  nextButton.classList.toggle("active");
+  const nextButton = document.querySelector('.next-question');
+  nextButton.classList.toggle('active');
 
   if (currentNumber == birdsdata.length - 1) {
-    nextButton.innerHTML = "Показать результаты";
+    nextButton.innerHTML = 'Показать результаты';
   }
 }
 
@@ -53,15 +54,15 @@ function showNextQuestion() {
   if (currentNumber < birdsdata.length - 1) {
     currentNumber++;
     nextRound(currentNumber);
-    updateBirdInfo(birdQuestImg, "******");
+    updateBirdInfo(birdQuestImg, '******');
     points = maxPoints;
     success = false;
     updateNextButton();
     showInfo();
-    console.log("next", points, totalPoints);
+    console.log('next', points, totalPoints);
   } else {
-    localStorage.setItem("points", totalPoints);
-    location.href = "./results.html";
+    localStorage.setItem('points', totalPoints);
+    location.href = './results.html';
   }
 }
 
@@ -77,48 +78,49 @@ function nextRound(currentNumber) {
 }
 
 function setGroup(currentNumber) {
-  const prevGroup = document.querySelector(".question-item.active");
+  const prevGroup = document.querySelector('.question-item.active');
   if (prevGroup) {
-    prevGroup.classList.toggle("active");
+    prevGroup.classList.toggle('active');
   }
   const currentGroup =
-    document.querySelectorAll(".question-item")[currentNumber];
+    document.querySelectorAll('.question-item')[currentNumber];
   if (currentGroup) {
-    currentGroup.classList.toggle("active");
+    currentGroup.classList.toggle('active');
   }
 }
 
 function updateBirdInfo(image, name) {
-  const birdImg = document.querySelector(".question-bird");
+  const birdImg = document.querySelector('.question-bird');
   if (birdImg) {
     birdImg.src = image;
   }
-  const birdName = document.querySelector(".question-bird-name");
+  const birdName = document.querySelector('.question-bird-name');
   if (birdName) {
     birdName.innerHTML = name;
   }
 }
 
 function setBirdAudio(audio) {
-  const audioDiv = document.querySelector(".question-audio");
-  if (audioDiv) {
-    audioDiv.src = audio;
+  const questionDiv = document.getElementById('question-audio-wrapper');
+  if (questionDiv) {
+    questionDiv.innerHTML = '';
+    drawPlayer(questionDiv, audio);
   }
 }
 
 function setVariantList(group) {
-  const variantsList = document.querySelector(".variant-list");
+  const variantsList = document.querySelector('.variant-list');
   if (variantsList) {
-    variantsList.innerHTML = "";
+    variantsList.innerHTML = '';
     group.forEach((element) => {
-      const variant = document.createElement("li");
+      const variant = document.createElement('li');
       variant.dataset.number = element.id;
       variant.innerHTML = `${element.name}`;
-      const detector = document.createElement("div");
-      detector.classList.add("detector");
+      const detector = document.createElement('div');
+      detector.classList.add('detector');
       variant.prepend(detector);
-      variant.addEventListener("click", (e) => {
-        checkAnsver(e.target.closest("li"));
+      variant.addEventListener('click', (e) => {
+        checkAnsver(e.target.closest('li'));
       });
       variantsList.append(variant);
     });
@@ -127,9 +129,9 @@ function setVariantList(group) {
 
 function checkAnsver(li) {
   if (!success) {
-    const detector = li.querySelector(".detector");
+    const detector = li.querySelector('.detector');
     if (li.dataset.number == currentBird.id) {
-      detector.classList.add("success");
+      detector.classList.add('success');
       success = true;
       totalPoints += points;
       updateBirdInfo(currentBird.image, currentBird.name);
@@ -139,11 +141,11 @@ function checkAnsver(li) {
       const audio = new Audio(winSound);
       audio.play();
 
-      const questAudio = document.querySelector(".question-audio");
+      const questAudio = document.querySelector('.question-audio');
       questAudio.pause();
     } else {
-      if (!detector.classList.contains("error")) {
-        detector.classList.add("error");
+      if (!detector.classList.contains('error')) {
+        detector.classList.add('error');
         points--;
 
         const audio = new Audio(failSound);
@@ -156,25 +158,25 @@ function checkAnsver(li) {
 }
 
 function updateTotalPoints() {
-  const scoreDiv = document.querySelector(".current-score");
+  const scoreDiv = document.querySelector('.current-score');
   if (scoreDiv) {
     scoreDiv.innerHTML = `Счет: ${totalPoints}`;
   }
 }
 
 function showInfo(number) {
-  const instruction = document.querySelector(".instruction");
-  const info = document.querySelector(".variant-info");
+  const instruction = document.querySelector('.instruction');
+  const info = document.querySelector('.variant-info');
 
-  const variantImage = document.querySelector(".variant-bird");
-  const variantName = document.querySelector(".variant-bird-name");
-  const variantNameEn = document.querySelector(".variant-bird-name-en");
-  const variantAudio = document.querySelector(".variant-audio");
-  const variantDescriprion = document.querySelector(".variant-description");
+  const variantImage = document.querySelector('.variant-bird');
+  const variantName = document.querySelector('.variant-bird-name');
+  const variantNameEn = document.querySelector('.variant-bird-name-en');
+  const variantAudio = document.querySelector('.variant-audio');
+  const variantDescriprion = document.querySelector('.variant-description');
 
   if (number) {
-    instruction.classList.remove("active");
-    info.classList.add("active");
+    instruction.classList.remove('active');
+    info.classList.add('active');
 
     const variantBird = currentQuestion.find((element) => element.id == number);
 
@@ -184,13 +186,13 @@ function showInfo(number) {
     variantAudio.src = variantBird.audio;
     variantDescriprion.innerHTML = variantBird.description;
   } else {
-    instruction.classList.add("active");
-    info.classList.remove("active");
+    instruction.classList.add('active');
+    info.classList.remove('active');
 
-    variantImage.src = "#";
-    variantName.innerHTML = "";
-    variantNameEn.innerHTML = "";
-    variantAudio.src = "#";
-    variantDescriprion.innerHTML = "";
+    variantImage.src = '#';
+    variantName.innerHTML = '';
+    variantNameEn.innerHTML = '';
+    variantAudio.src = '#';
+    variantDescriprion.innerHTML = '';
   }
 }

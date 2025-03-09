@@ -1,7 +1,7 @@
 import './style.scss';
 import birdsdata from '../../assets/birdsdata';
 import closeBtn from '../../assets/icon/close.svg';
-import { drawPlayer, playpauseAudio } from '../../player/player';
+import { drawPlayer } from '../../player/player';
 
 let divWrapper = null;
 let imgCloseBtn = null;
@@ -62,11 +62,11 @@ function showCatalogItemInfo(element) {
   pDescription.innerHTML = element.description;
   divInfo.append(pDescription);
 
-  let audioSong = document.createElement('audio');
-  audioSong.classList.add('element-audio');
-  audioSong.src = element.audio;
-  audioSong.controls = true;
-  divInfo.append(audioSong);
+  // let audioSong = document.createElement('audio');
+  // audioSong.classList.add('element-audio');
+  // audioSong.src = element.audio;
+  // audioSong.controls = true;
+  // divInfo.append(audioSong);
 
   drawPlayer(divInfo, element.audio);
 }
