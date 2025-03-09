@@ -1,4 +1,5 @@
 import './style.scss';
+import logoHeader from './../../assets/img/logo-transparent.png';
 import birdsdata from '../../assets/birdsdata';
 import closeBtn from '../../assets/icon/close.svg';
 import { drawPlayer } from '../../player/player';
