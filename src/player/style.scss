@@ -20,7 +20,9 @@
     .play-btn,
     .volume-wrapper {
       display: flex;
-      align-items: center;}
+      align-items: center;    
+      cursor: pointer;
+    }
   }
   .audio-range-volume,
   .audio-range-duration{
