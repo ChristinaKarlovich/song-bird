@@ -171,6 +171,7 @@ function showInfo(number) {
   const variantImage = document.querySelector('.variant-bird');
   const variantName = document.querySelector('.variant-bird-name');
   const variantNameEn = document.querySelector('.variant-bird-name-en');
+  const variantAudioWrapper = document.querySelector('.variant-audio-wrapper');
   const variantAudio = document.querySelector('.variant-audio');
   const variantDescriprion = document.querySelector('.variant-description');
 
@@ -183,7 +184,10 @@ function showInfo(number) {
     variantImage.src = variantBird.image;
     variantName.innerHTML = variantBird.name;
     variantNameEn.innerHTML = variantBird.species;
-    variantAudio.src = variantBird.audio;
+    if (variantAudioWrapper) {
+      variantAudioWrapper.innerHTML = '';
+      drawPlayer(variantAudioWrapper, variantBird.audio);
+    }
     variantDescriprion.innerHTML = variantBird.description;
   } else {
     instruction.classList.add('active');
